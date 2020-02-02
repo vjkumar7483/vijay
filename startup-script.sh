@@ -21,29 +21,29 @@ curl -sSO https://dl.google.com/cloudagents/install-logging-agent.sh
 sudo bash install-logging-agent.sh
 
 # Install or update needed software
-apt-get update
-apt-get install -yq git supervisor python python-pip
-pip install --upgrade pip virtualenv
+sudo apt-get update
+sudo apt-get install -yq git supervisor python python3-pip
+sudo pip install --upgrade pip virtualenv
 
 # Account to own server process
-useradd -m -d /home/pythonapp pythonapp
+sudo /usr/sbin/useradd -m -d /home/pythonapp pythonapp
 
 # Fetch source code
 export HOME=/root
-git clone https://github.com/vjkumar7483/vijay.git /opt/app
+sudo git clone https://github.com/vjkumar7483/vijay.git /opt/app
 
 # Python environment setup
-virtualenv -p python3 /opt/app/gce/env
-source /opt/app/gce/env/bin/activate
-/opt/app/gce/env/bin/pip install -r /opt/app/gce/requirements.txt
+sudo virtualenv -p python3 /opt/app/env
+source /opt/app/env/bin/activate
+/opt/app/env/bin/pip install -r /opt/app/requirements.txt
 
 # Set ownership to newly created account
-chown -R pythonapp:pythonapp /opt/app
+sudo chown -R pythonapp:pythonapp /opt/app
 
 # Put supervisor configuration in proper place
-cp /opt/app/gce/python-app.conf /etc/supervisor/conf.d/python-app.conf
+sudo cp /opt/app/python-app.conf /etc/supervisor/conf.d/python-app.conf
 
 # Start service via supervisorctl
-supervisorctl reread
-supervisorctl update
+sudo supervisorctl reread
+sudo supervisorctl update
 # [END getting_started_gce_startup_script]
