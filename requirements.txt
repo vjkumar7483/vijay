@@ -1,0 +1,8 @@
+flask==1.1.1
+honcho==1.0.1
+gunicorn==19.9.0
+pandas==0.24.2
+google-cloud-storage==1.25.0
+xlrd==1.0.0
+gcsfs==0.2.3
+gunicorn==19.9.0
