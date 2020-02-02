@@ -12,37 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from flask import Flask, request, make_response, jsonify
-import pandas as pd
-
-final_list=pd.read_excel('gs://sunday-msayty.appspot.com/final_list.xlsx')
-var_list=final_list.set_index('Variable')['Defination'].to_dict()
-
-# initialize the flask app
+from flask import Flask
 app = Flask(__name__)
 
-# create a route for webhook
-@app.route('/', methods=['POST'])
-def webhook():
-    # build a request object
-    req = request.get_json(force=True)
-    # return response
-    return make_response(jsonify(results(req)))
-# function for responses
-def results(req):
-    # fetch action from json
-    action = req.get('queryResult').get('action')
-    #if req.get("queryResult").get("action") != "Defination":
-     #   return {}
-    result = req.get("queryResult")
-    parameter = result.get("parameters")
-    variable = parameter.get("variable")
-    variable=tuple(variable)
-    defination = var_list
-    speech =  str(defination[variable[0]])
-    print(speech)
-    # return a fulfillment response
-    return {'fulfillmentText': speech }
+
+@app.route('/', methods=['GET'])
+def say_hello():
+    return "Hello, world!"
 
 # run the app
 
